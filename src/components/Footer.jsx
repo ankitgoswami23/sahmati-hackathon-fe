@@ -7,7 +7,7 @@ const Footer = () => {
       sx={{
         width: "100%",
         backgroundColor: "#fff", // Set background color to white
-        padding: 2,
+        padding: { xs: 1, sm: 2 }, // Responsive padding
         color: "#24b4b3", // Set text color to aqua
         textAlign: "center",
         position: "fixed",
@@ -16,7 +16,14 @@ const Footer = () => {
         boxShadow: "0px -4px 10px rgba(36, 180, 179, 0.5)", // Apply aqua box shadow
       }}
     >
-      <Typography variant="body2">© 2024 Zuno General Insurance</Typography>
+      <Typography
+        variant="body2"
+        sx={{
+          fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive font size
+        }}
+      >
+        © 2024 Zuno General Insurance
+      </Typography>
     </Box>
   );
 };

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Tabs, Tab, CircularProgress } from "@mui/material";
-import { Divider } from "@mui/material";
-
+import {
+  Box,
+  Typography,
+  Tabs,
+  Tab,
+  CircularProgress,
+  Divider,
+} from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 import axios from "axios";
@@ -9,7 +14,6 @@ import axios from "axios";
 const ResponseRender = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-
   const [data, setData] = useState(null);
 
   const handleTabChange = (event, newValue) => {
@@ -33,9 +37,8 @@ const ResponseRender = () => {
           JSON.parse(res.data.data.choices[0].message.content)
         );
       }
-      console.log(res.data);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -47,39 +50,6 @@ const ResponseRender = () => {
     };
     fetchData();
   }, []);
-
-  //   const renderData = (dataItem) => {
-  //     if (Array.isArray(dataItem)) {
-  //       return dataItem.map((item, index) => (
-  //         <Box key={index} sx={{ marginBottom: 2 }}>
-  //           {renderData(item)}
-  //           {index < dataItem.length - 1 && (
-  //             <Divider sx={{ backgroundColor: "black" }} />
-  //           )}{" "}
-  //           {/* Add divider between items */}
-  //         </Box>
-  //       ));
-  //     } else if (typeof dataItem === "object" && dataItem !== null) {
-  //       return Object.entries(dataItem).map(([key, value], index) => (
-  //         <Box
-  //           key={index}
-  //           sx={{ marginBottom: 2, display: "flex", alignItems: "center" }}
-  //         >
-  //           <Typography variant="h6" sx={{ fontWeight: "bold", marginRight: 1 }}>
-  //             {key.charAt(0).toUpperCase() + key.slice(1)}:
-  //           </Typography>
-  //           <Box sx={{ marginLeft: 1 }}> {renderData(value)}</Box>
-  //         </Box>
-  //       ));
-  //     } else {
-  //       return (
-  //         <Typography sx={{ display: "inline" }}>
-  //           {dataItem !== null ? dataItem.toString() : "null"}
-  //         </Typography>
-  //       );
-  //     }
-  //   };
-
   const renderData = (dataItem) => {
     if (Array.isArray(dataItem)) {
       return dataItem.map((item, index) => (
@@ -116,6 +86,7 @@ const ResponseRender = () => {
       );
     }
   };
+
   return (
     <>
       <Header />
@@ -133,14 +104,14 @@ const ResponseRender = () => {
           sx={{
             flex: 1,
             overflowY: "auto",
-            padding: 2,
+            padding: { xs: 1, sm: 2 },
             margin: "0 auto",
             backgroundColor: "#fff",
             borderRadius: 2,
             boxShadow: "0px 4px 12px rgba(36, 180, 179, 0.8)",
             width: "100%",
             maxWidth: "1200px",
-            minWidth: "1200px",
+            minWidth: "300px",
           }}
         >
           {loading && (
@@ -151,8 +122,6 @@ const ResponseRender = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                // bgcolor: "rgba(255, 255, 255, 0.8)",
-                // backdropFilter: "blur(4px)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -221,7 +190,7 @@ const ResponseRender = () => {
                     </Box>
                   ))}
                 </>
-              )}{" "}
+              )}
             </>
           )}
         </Box>
