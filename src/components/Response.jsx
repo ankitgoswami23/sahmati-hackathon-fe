@@ -6,49 +6,255 @@ import axios from "axios";
 
 const Response = () => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([
+    {
+      title: "Income",
+      data: [
+        {
+          description: "IMPS-319507865074-RESILIENT INNOVATION",
+          amount: 50769.94,
+          timestamp: "2024-06-15T07:23:35+05:30",
+        },
+        {
+          description: "UPI-BHARATPE PAYOUTS-CASHFREEBHARATP@YESBANK",
+          amount: 38602,
+          timestamp: "2024-06-16T20:53:39+05:30",
+        },
+        {
+          description: "UPI-KATHIRVEL R-9952144145@YBL",
+          amount: 1300,
+          timestamp: "2024-06-24T15:40:20+05:30",
+        },
+        {
+          description: "IMPS-223212545821-BHARATPE-ICIC",
+          amount: 23000,
+          timestamp: "2024-07-23T17:56:52+05:30",
+        },
+        {
+          description: "UPI-G DEEPAN-DEEPANGOVINDARAJ11@OKICICI",
+          amount: 26240,
+          timestamp: "2024-07-09T11:12:41+05:30",
+        },
+        {
+          description: "MILLENNIA CARD CASH BACK",
+          amount: 400,
+          timestamp: "2024-07-06T18:08:40+05:30",
+        },
+        {
+          description: "UPI-BHARATPE PAYOUTS-CASHFREEBHARATP@YESBANK",
+          amount: 20000,
+          timestamp: "2024-08-03T08:55:42+05:30",
+        },
+        {
+          description: "UPI-VIDHYASHANKAR M-7401393801@AXL",
+          amount: 10502,
+          timestamp: "2024-09-15T23:28:25+05:30",
+        },
+        {
+          description: "UPI-PAYTM-PAYOUTS@PAYTM-PYTM0123456",
+          amount: 44833.95,
+          timestamp: "2024-08-22T00:50:45+05:30",
+        },
+        {
+          description: "UPI-PAYTM-PAYOUTS@PAYTM-PYTM0123456",
+          amount: 49996,
+          timestamp: "2024-10-02T17:53:07+05:30",
+        },
+      ],
+    },
+    {
+      title: "Expenses",
+      data: [
+        {
+          category: "Utilities",
+          transactions: [
+            {
+              description: "UPI-LAZYPAY PRIVATE LIMI-LAZYPAYPVTLTD",
+              amount: 190,
+              timestamp: "2024-08-07T07:37:00+05:30",
+            },
+            {
+              description: "UPI-ADD MONEY TO WALLET-ADD-MONEY@PAYTM",
+              amount: 259.68,
+              timestamp: "2024-09-15T13:05:10+05:30",
+            },
+            {
+              description: "UPI-MADHUR CHAI-Q630729614@YBL",
+              amount: 60,
+              timestamp: "2024-09-29T15:01:52+05:30",
+            },
+            {
+              description: "UPI-AMUL PARLOUR-Q855461190",
+              amount: 190,
+              timestamp: "2024-09-09T16:12:00+05:30",
+            },
+          ],
+        },
+        {
+          category: "Grocery",
+          transactions: [
+            {
+              description: "UPI-DHANAPAL FANCY STORE-PAYTM",
+              amount: 170,
+              timestamp: "2024-08-04T17:11:42+05:30",
+            },
+            {
+              description: "UPI-BIGBASKET-BBNOW@YBL",
+              amount: 500,
+              timestamp: "2024-10-05T16:20:55+05:30",
+            },
+          ],
+        },
+        {
+          category: "Healthcare",
+          transactions: [
+            {
+              description: "UPI-STAR PHARMACY-BHARATPE09897973834",
+              amount: 80,
+              timestamp: "2024-07-15T11:55:48+05:30",
+            },
+            {
+              description: "UPI-BCS PHARMACY-BCSPHARMACY",
+              amount: 56,
+              timestamp: "2024-10-04T07:09:09+05:30",
+            },
+          ],
+        },
+        {
+          category: "Entertainment",
+          transactions: [
+            {
+              description: "MILLENNIA CARD CASH BACK",
+              amount: 400,
+              timestamp: "2024-07-06T18:08:40+05:30",
+            },
+            {
+              description: "UPI-GRAND CINEMAS-PAYTM",
+              amount: 160,
+              timestamp: "2024-09-22T17:19:49+05:30",
+            },
+            {
+              description: "UPI-INNOVATIVE MULTIPLEX-PAYENT",
+              amount: 359,
+              timestamp: "2024-07-05T14:25:14+05:30",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Debts",
+      data: [
+        {
+          description: "FD THROUGH NET",
+          amount: 100000,
+          timestamp: "2024-10-02T13:10:00+05:30",
+        },
+        {
+          description: "UPI-KONDAMUDI SURI PRAKA-JONAVIJAY1",
+          amount: 13000,
+          timestamp: "2024-09-05T20:29:15+05:30",
+        },
+        {
+          description: "UPI-MD AIZHAR-MDEBRARALAMMDEBRARALAM",
+          amount: 5300,
+          timestamp: "2024-09-09T20:30:22+05:30",
+        },
+        {
+          description: "UPI-VENUGOPAL M",
+          amount: 1600,
+          timestamp: "2024-09-15T20:54:41+05:30",
+        },
+      ],
+    },
+    {
+      title: "Assets and Investments",
+      data: [
+        {
+          description: "FD THROUGH NET",
+          amount: 100000,
+          timestamp: "2024-10-02T13:10:00+05:30",
+        },
+      ],
+    },
+    {
+      title: "Insurance Policies",
+      data: [
+        {
+          description: "TATAAIAPOLICY_U204046624",
+          amount: 4998,
+          timestamp: "2024-07-25T16:11:39+05:30",
+        },
+        {
+          description: "ACH D- POLICYBAZAAR",
+          amount: 2460,
+          timestamp: "2024-06-29T15:27:57+05:30",
+        },
+      ],
+    },
+    {
+      title: "Financial Health Assessment",
+      data: {
+        "Debt-to-Income Ratio": 0.42,
+        "Disposable Income": 120000,
+      },
+    },
+    {
+      title: "Insurance Recommendations",
+      data: [
+        {
+          "Recommended Product": "Credit Health Premium",
+          "Sum Insured": 500000,
+          Premium: 5000,
+          Reason: "Debt-to-Income Ratio exceeds threshold",
+        },
+        {
+          "Recommended Product": "Health Value",
+          "Sum Insured": 300000,
+          Premium: 3000,
+          "Number of Insured Members": 1,
+          Reason: "Moderate healthcare spending with a basic coverage need",
+        },
+      ],
+    },
+  ]);
 
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
   };
 
-  const getFYData = async () => {
-    setLoading(true);
+  // const getFYData = async () => {
+  //   setLoading(true);
 
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/fetch-and-process-data-for-range`,
-        {
-          handle: localStorage.getItem("handleID"),
-        }
-      );
-      if (res.data.ok) {
-        setData(JSON.parse(res.data.data.choices[0].message.content));
-        console.log(
-          "data",
-          JSON.parse(res.data.data.choices[0].message.content)
-        );
-      }
-      console.log(res.data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     const res = await axios.post(
+  //       `${import.meta.env.VITE_BACKEND_URL}/fetch-and-process-data-for-range`,
+  //       {
+  //         handle: localStorage.getItem("handleID"),
+  //       }
+  //     );
+  //     if (res.data.ok) {
+  //       setData(JSON.parse(res.data.data.choices[0].message.content));
+  //       console.log(
+  //         "data",
+  //         JSON.parse(res.data.data.choices[0].message.content)
+  //       );
+  //     }
+  //     console.log(res.data);
+  //   } catch (e) {
+  //     console.log(e);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getFYData();
-    };
-    fetchData();
-  }, []);
-
-  // const jsonString =
-  //   '[\n    {\n        "title": "Income Parsing",\n        "data": {\n            "streams": [\n                {\n                    "description": "Salary or recurring credit",\n                    "total": 174142.95,\n                    "transactionIds": [\n                        "fe39f271-8c2f-4249-a174-1e65975035f2",\n                        "3feb5c4a-d202-440f-a96a-45b415d5d1a1",\n                        "9d0acfe9-20f9-4867-a8c3-0728c8a5d1e8",\n                        "8d1271e6-6714-412c-b51f-224064091c66",\n                        "c4296a3d-d794-41b6-83ff-4061f77b1a0d"\n                    ]\n                }\n            ]\n        }\n    },\n    {\n        "title": "Expense Parsing",\n        "data": {\n            "categories": {\n                "utilities": {\n                    "total": 1485.17,\n                    "transactionIds": [\n                        "d7e56d1a-f276-4373-85c1-8a9acdaee170",\n                        "e26bea29-4f4d-4aca-9b58-ff5c1d90fed6",\n                        "72f7e845-f5d4-4b1d-87c1-235e03def285"\n                    ]\n                },\n                "grocery": {\n                    "total": 701.9,\n                    "transactionIds": [\n                        "4d1b6d3a-bb6b-4a0f-9a92-602611353765",\n                        "5fad3fe3-3e43-4c69-a7d1-77c17c2b141e"\n                    ]\n                },\n                "entertainment": {\n                    "total": 2839.0,\n                    "transactionIds": [\n                        "bcf895d1-9183-40f8-bf9f-1aab01db9d7c",\n                        "cd606878-1fef-4e06-a32a-ea9be34cc918",\n                        "5482101d-c14e-476e-84bc-8e68d22e43f7"\n                    ]\n                },\n                "loanRepayments": {\n                    "total": 69172.0,\n                    "transactionIds": [\n                        "afe3c308-b6c2-4c9d-8365-60d2bfeeec3c",\n                        "eb54ef7b-21eb-4226-952e-8de26ad12c4e",\n                        "16f737fd-7123-4b03-b939-9bc9f3f249e2"\n                    ]\n                },\n                "healthcare": {\n                    "total": 14816.68,\n                    "transactionIds": [\n                        "d5f2f351-46e7-489e-a3e7-cf8e910eb2a9",\n                        "bc19c6ac-7ef9-426e-b1b7-1810bcfddec5",\n                        "e39f7cdf-16a7-4db6-9f80-d40cbe3c3624"\n                    ]\n                }\n            },\n            "discretionary": 4080.9,\n            "nonDiscretionary": 108040.95\n        }\n    },\n    {\n        "title": "Debt Identification",\n        "data": {\n            "loans": [\n                {\n                    "type": "home",\n                    "outstandingBalance": 130000,\n                    "EMIs": 5205,\n                    "transactionIds": [\n                        "179b719e-ed5c-4623-b465-a78093dbf0e5",\n                        "c3cb0ef3-f173-440c-a141-f3762efc38b9"\n                    ]\n                },\n                {\n                    "type": "personal",\n                    "outstandingBalance": 85000,\n                    "EMIs": 3800,\n                    "transactionIds": [\n                        "d831267e-660e-4375-9005-916670052514",\n                        "7ebd4066-13da-44c0-86fd-ac35b176e3f6"\n                    ]\n                }\n            ]\n        }\n    },\n    {\n        "title": "Asset Identification",\n        "data": {\n            "savings": {\n                "total": 60050,\n                "linkedAccounts": [\n                    {\n                        "type": "FD",\n                        "balance": 50000,\n                        "transactionId": "9e5fb545-76ee-40d8-97f9-8162a4c94bb2"\n                    }\n                ]\n            },\n            "investments": {\n                "total": 4800,\n                "linkedAccounts": [\n                    {\n                        "type": "SIP",\n                        "balance": 2300,\n                        "transactionId": "3b056e36-2369-4567-af1e-320c1fc8ebb8"\n                    }\n                ]\n            }\n        }\n    },\n    {\n        "title": "Insurance Affordability Index",\n        "data": {\n            "disposableIncome": 61000,\n            "debtToIncomeRatio": 0.34,\n            "existingPolicies": [\n                {\n                    "name": "TATA AIA",\n                    "premium": 7200,\n                    "transactionIds": [\n                        "b37ab860-8c9d-4c65-accb-d8dfceafaa39"\n                    ]\n                }\n            ],\n            "affordabilityScore": 0.18\n        }\n    },\n    {\n        "title": "Financial Health Assessment",\n        "data": {\n            "debtToIncomeRatio": "34%",\n            "recommendation": "Stable financial position but potential risk in case of unexpected expenses"\n        }\n    },\n    {\n        "title": "Insurance Recommendations",\n        "data": {\n            "creditLinkedInsurance": [\n                {\n                    "planName": "Credit Health Premium",\n                    "sumInsured": "₹500,000",\n                    "premium": "₹5,000/year",\n                    "linkedCreditProduct": "Home Loan",\n                    "additionalBenefits": ["Accidental Death", "Critical Illness"]\n                }\n            ],\n            "healthInsurance": [\n                {\n                    "planName": "Health Secure",\n                    "sumInsured": "₹500,000",\n                    "premium": "₹5,000/year",\n                    "numberInsured": 2,\n                    "coverages": ["OPD Coverage", "Critical Illness"],\n                    "additionalBenefits": "No-Claim Bonus"\n                }\n            ]\n        }\n    }\n]';
-
-  // const data = JSON.parse(jsonString);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await getFYData();
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <>
@@ -104,117 +310,103 @@ const Response = () => {
                           </Typography>
                           <Box className="description" sx={{ paddingLeft: 2 }}>
                             {/* Check if item.data is an array */}
-                            {Array.isArray(item.data)
-                              ? // If item.data is an array, map directly over it
-                                item.data.map((dataItem, i) => (
-                                  <Box key={i} sx={{ marginBottom: 2 }}>
-                                    {Object.keys(dataItem).map((key, j) => (
-                                      <Typography key={j}>
-                                        <strong>
-                                          {key.replace(/([A-Z])/g, " $1")}:{" "}
-                                        </strong>
-                                        {Array.isArray(dataItem[key]) ? (
-                                          <ul>
-                                            {dataItem[key].map((subItem, k) =>
-                                              typeof subItem === "string" ? (
-                                                <li key={k}>{subItem}</li>
-                                              ) : (
-                                                <li key={k}>
-                                                  {Object.keys(subItem).map(
-                                                    (subKey, l) => (
-                                                      <span key={l}>
-                                                        {subKey.replace(
-                                                          /([A-Z])/g,
-                                                          " $1"
-                                                        )}
-                                                        : {subItem[subKey]}{" "}
-                                                      </span>
-                                                    )
-                                                  )}
-                                                </li>
-                                              )
-                                            )}
-                                          </ul>
-                                        ) : (
-                                          <span>{dataItem[key]}</span>
-                                        )}
-                                      </Typography>
-                                    ))}
-                                  </Box>
-                                ))
-                              : // If item.data is an object, iterate over its keys
-                                Object.keys(item.data).map((category, i) => (
-                                  <Box key={i} sx={{ marginBottom: 2 }}>
-                                    <Typography
-                                      variant="h6"
-                                      sx={{
-                                        textTransform: "capitalize",
-                                        marginBottom: 1,
-                                      }}
-                                    >
-                                      {category.replace(/([A-Z])/g, " $1")}
-                                    </Typography>
-                                    <Box sx={{ paddingLeft: 2 }}>
-                                      {item.data[category].map(
-                                        (dataItem, j) => (
-                                          <Box key={j} sx={{ marginBottom: 2 }}>
-                                            {Object.keys(dataItem).map(
-                                              (key, k) => (
-                                                <Typography key={k}>
-                                                  <strong>
-                                                    {key.replace(
-                                                      /([A-Z])/g,
-                                                      " $1"
-                                                    )}
-                                                    :{" "}
-                                                  </strong>
-                                                  {Array.isArray(
-                                                    dataItem[key]
-                                                  ) ? (
-                                                    <ul>
-                                                      {dataItem[key].map(
-                                                        (subItem, l) =>
-                                                          typeof subItem ===
-                                                          "string" ? (
-                                                            <li key={l}>
-                                                              {subItem}
-                                                            </li>
-                                                          ) : (
-                                                            <li key={l}>
-                                                              {Object.keys(
-                                                                subItem
-                                                              ).map(
-                                                                (subKey, m) => (
-                                                                  <span key={m}>
-                                                                    {subKey.replace(
-                                                                      /([A-Z])/g,
-                                                                      " $1"
-                                                                    )}
-                                                                    :{" "}
-                                                                    {
-                                                                      subItem[
-                                                                        subKey
-                                                                      ]
-                                                                    }{" "}
-                                                                  </span>
-                                                                )
-                                                              )}
-                                                            </li>
-                                                          )
+                            {Array.isArray(item.data) ? (
+                              item.data.map((dataItem, i) => (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  {Object.keys(dataItem).map((key, j) => (
+                                    <Typography key={j}>
+                                      <strong>
+                                        {key.replace(/([A-Z])/g, " $1")}:{" "}
+                                      </strong>
+                                      {Array.isArray(dataItem[key]) ? (
+                                        <ul>
+                                          {dataItem[key].map((subItem, k) =>
+                                            typeof subItem === "string" ? (
+                                              <li key={k}>{subItem}</li>
+                                            ) : typeof subItem === "object" ? (
+                                              <li key={k}>
+                                                {Object.keys(subItem).map(
+                                                  (subKey, l) => (
+                                                    <span key={l}>
+                                                      {subKey.replace(
+                                                        /([A-Z])/g,
+                                                        " $1"
                                                       )}
-                                                    </ul>
-                                                  ) : (
-                                                    <span>{dataItem[key]}</span>
-                                                  )}
-                                                </Typography>
-                                              )
-                                            )}
-                                          </Box>
+                                                      : {subItem[subKey]}{" "}
+                                                    </span>
+                                                  )
+                                                )}
+                                              </li>
+                                            ) : (
+                                              <li key={k}>{subItem}</li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : typeof dataItem[key] === "object" ? (
+                                        Object.keys(dataItem[key]).map(
+                                          (subKey, l) => (
+                                            <span key={l}>
+                                              {subKey.replace(
+                                                /([A-Z])/g,
+                                                " $1"
+                                              )}
+                                              : {dataItem[key][subKey]}{" "}
+                                            </span>
+                                          )
                                         )
+                                      ) : (
+                                        <span>{dataItem[key]}</span>
                                       )}
-                                    </Box>
+                                    </Typography>
+                                  ))}
+                                </Box>
+                              ))
+                            ) : typeof item.data === "object" ? (
+                              // If item.data is an object, iterate over its keys
+                              Object.keys(item.data).map((category, i) => (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  <Typography
+                                    variant="h6"
+                                    sx={{
+                                      textTransform: "capitalize",
+                                      marginBottom: 1,
+                                    }}
+                                  >
+                                    {category.replace(/([A-Z])/g, " $1")}
+                                  </Typography>
+                                  <Box sx={{ paddingLeft: 2 }}>
+                                    {typeof item.data[category] === "object" ? (
+                                      Object.keys(item.data[category]).map(
+                                        (subKey, j) => (
+                                          <Typography key={j}>
+                                            <strong>
+                                              {subKey.replace(
+                                                /([A-Z])/g,
+                                                " $1"
+                                              )}
+                                              :{" "}
+                                            </strong>
+                                            <span>
+                                              {item.data[category][subKey]}
+                                            </span>
+                                          </Typography>
+                                        )
+                                      )
+                                    ) : (
+                                      <Typography>
+                                        <strong>
+                                          {category.replace(/([A-Z])/g, " $1")}:{" "}
+                                        </strong>
+                                        <span>{item.data[category]}</span>
+                                      </Typography>
+                                    )}
                                   </Box>
-                                ))}
+                                </Box>
+                              ))
+                            ) : (
+                              // If item.data is a string or other primitive type, render it directly
+                              <Typography>{item.data}</Typography>
+                            )}
                           </Box>
                         </>
                       )}
@@ -240,117 +432,103 @@ const Response = () => {
                           </Typography>
                           <Box className="description" sx={{ paddingLeft: 2 }}>
                             {/* Check if item.data is an array */}
-                            {Array.isArray(item.data)
-                              ? // If item.data is an array, map directly over it
-                                item.data.map((dataItem, i) => (
-                                  <Box key={i} sx={{ marginBottom: 2 }}>
-                                    {Object.keys(dataItem).map((key, j) => (
-                                      <Typography key={j}>
-                                        <strong>
-                                          {key.replace(/([A-Z])/g, " $1")}:{" "}
-                                        </strong>
-                                        {Array.isArray(dataItem[key]) ? (
-                                          <ul>
-                                            {dataItem[key].map((subItem, k) =>
-                                              typeof subItem === "string" ? (
-                                                <li key={k}>{subItem}</li>
-                                              ) : (
-                                                <li key={k}>
-                                                  {Object.keys(subItem).map(
-                                                    (subKey, l) => (
-                                                      <span key={l}>
-                                                        {subKey.replace(
-                                                          /([A-Z])/g,
-                                                          " $1"
-                                                        )}
-                                                        : {subItem[subKey]}{" "}
-                                                      </span>
-                                                    )
-                                                  )}
-                                                </li>
-                                              )
-                                            )}
-                                          </ul>
-                                        ) : (
-                                          <span>{dataItem[key]}</span>
-                                        )}
-                                      </Typography>
-                                    ))}
-                                  </Box>
-                                ))
-                              : // If item.data is an object, iterate over its keys
-                                Object.keys(item.data).map((category, i) => (
-                                  <Box key={i} sx={{ marginBottom: 2 }}>
-                                    <Typography
-                                      variant="h6"
-                                      sx={{
-                                        textTransform: "capitalize",
-                                        marginBottom: 1,
-                                      }}
-                                    >
-                                      {category.replace(/([A-Z])/g, " $1")}
-                                    </Typography>
-                                    <Box sx={{ paddingLeft: 2 }}>
-                                      {item.data[category].map(
-                                        (dataItem, j) => (
-                                          <Box key={j} sx={{ marginBottom: 2 }}>
-                                            {Object.keys(dataItem).map(
-                                              (key, k) => (
-                                                <Typography key={k}>
-                                                  <strong>
-                                                    {key.replace(
-                                                      /([A-Z])/g,
-                                                      " $1"
-                                                    )}
-                                                    :{" "}
-                                                  </strong>
-                                                  {Array.isArray(
-                                                    dataItem[key]
-                                                  ) ? (
-                                                    <ul>
-                                                      {dataItem[key].map(
-                                                        (subItem, l) =>
-                                                          typeof subItem ===
-                                                          "string" ? (
-                                                            <li key={l}>
-                                                              {subItem}
-                                                            </li>
-                                                          ) : (
-                                                            <li key={l}>
-                                                              {Object.keys(
-                                                                subItem
-                                                              ).map(
-                                                                (subKey, m) => (
-                                                                  <span key={m}>
-                                                                    {subKey.replace(
-                                                                      /([A-Z])/g,
-                                                                      " $1"
-                                                                    )}
-                                                                    :{" "}
-                                                                    {
-                                                                      subItem[
-                                                                        subKey
-                                                                      ]
-                                                                    }{" "}
-                                                                  </span>
-                                                                )
-                                                              )}
-                                                            </li>
-                                                          )
+                            {Array.isArray(item.data) ? (
+                              item.data.map((dataItem, i) => (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  {Object.keys(dataItem).map((key, j) => (
+                                    <Typography key={j}>
+                                      <strong>
+                                        {key.replace(/([A-Z])/g, " $1")}:{" "}
+                                      </strong>
+                                      {Array.isArray(dataItem[key]) ? (
+                                        <ul>
+                                          {dataItem[key].map((subItem, k) =>
+                                            typeof subItem === "string" ? (
+                                              <li key={k}>{subItem}</li>
+                                            ) : typeof subItem === "object" ? (
+                                              <li key={k}>
+                                                {Object.keys(subItem).map(
+                                                  (subKey, l) => (
+                                                    <span key={l}>
+                                                      {subKey.replace(
+                                                        /([A-Z])/g,
+                                                        " $1"
                                                       )}
-                                                    </ul>
-                                                  ) : (
-                                                    <span>{dataItem[key]}</span>
-                                                  )}
-                                                </Typography>
-                                              )
-                                            )}
-                                          </Box>
+                                                      : {subItem[subKey]}{" "}
+                                                    </span>
+                                                  )
+                                                )}
+                                              </li>
+                                            ) : (
+                                              <li key={k}>{subItem}</li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : typeof dataItem[key] === "object" ? (
+                                        Object.keys(dataItem[key]).map(
+                                          (subKey, l) => (
+                                            <span key={l}>
+                                              {subKey.replace(
+                                                /([A-Z])/g,
+                                                " $1"
+                                              )}
+                                              : {dataItem[key][subKey]}{" "}
+                                            </span>
+                                          )
                                         )
+                                      ) : (
+                                        <span>{dataItem[key]}</span>
                                       )}
-                                    </Box>
+                                    </Typography>
+                                  ))}
+                                </Box>
+                              ))
+                            ) : typeof item.data === "object" ? (
+                              // If item.data is an object, iterate over its keys
+                              Object.keys(item.data).map((category, i) => (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  <Typography
+                                    variant="h6"
+                                    sx={{
+                                      textTransform: "capitalize",
+                                      marginBottom: 1,
+                                    }}
+                                  >
+                                    {category.replace(/([A-Z])/g, " $1")}
+                                  </Typography>
+                                  <Box sx={{ paddingLeft: 2 }}>
+                                    {typeof item.data[category] === "object" ? (
+                                      Object.keys(item.data[category]).map(
+                                        (subKey, j) => (
+                                          <Typography key={j}>
+                                            <strong>
+                                              {subKey.replace(
+                                                /([A-Z])/g,
+                                                " $1"
+                                              )}
+                                              :{" "}
+                                            </strong>
+                                            <span>
+                                              {item.data[category][subKey]}
+                                            </span>
+                                          </Typography>
+                                        )
+                                      )
+                                    ) : (
+                                      <Typography>
+                                        <strong>
+                                          {category.replace(/([A-Z])/g, " $1")}:{" "}
+                                        </strong>
+                                        <span>{item.data[category]}</span>
+                                      </Typography>
+                                    )}
                                   </Box>
-                                ))}
+                                </Box>
+                              ))
+                            ) : (
+                              // If item.data is a string or other primitive type, render it directly
+                              <Typography>{item.data}</Typography>
+                            )}
                           </Box>
                         </>
                       )}

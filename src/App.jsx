@@ -4,7 +4,7 @@ import "@mui/material";
 import "@mui/lab";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Response from "./components/Response";
+import Response from "./components/Response2";
 
 function App() {
   return (
