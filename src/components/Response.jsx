@@ -1,18 +1,36 @@
-import React, { useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Tabs, Tab, LinearProgress } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 import axios from "axios";
 
 const Response = () => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
+  };
   const getFYData = async () => {
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/fetch-and-process-data-for-range`,
-      {
-        handle: localStorage.getItem("handleID"),
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/fetch-and-process-data-for-range`,
+        {
+          handle: localStorage.getItem("handleID"),
+        }
+      );
+      if (res.data.ok) {
+        setData(JSON.parse(res.data.data.choices[0].message.content));
       }
-    );
-    console.log(res.data);
+      console.log(res.data);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -22,10 +40,11 @@ const Response = () => {
     fetchData();
   }, []);
 
-  const jsonString =
-    '[\n  {\n    "title": "Income Streams",\n    "description": {\n      "totalIncome": 383030.95,\n      "streams": [\n        {\n          "name": "UPI-G DEEPAN-DEEPANGOVINDARAJ11@OKICICI",\n          "amount": 26240.0,\n          "frequency": "One-time"\n        },\n        {\n          "name": "UPI-KATHIRVEL R",\n          "amount": 2600.0,\n          "frequency": "Multiple instances"\n        },\n        {\n          "name": "UPI-SOMALINGAM B",\n          "amount": 1000.0,\n          "frequency": "One-time"\n        },\n        {\n          "name": "IMPS-RESILIENT INNOVATION",\n          "amount": 50769.94,\n          "frequency": "One-time"\n        },\n        {\n          "name": "IMPS-BHARATPE",\n          "amount": 23000.0,\n          "frequency": "One-time"\n        },\n        {\n          "name": "UPI-CASHFREE PAYMENTS",\n          "amount": 182.0,\n          "frequency": "One-time"\n        },\n        {\n          "name": "UPI-PAYTM-PAYTM INCENTIVE",\n          "amount": 44783.95,\n          "frequency": "Multiple instances"\n        },\n        {\n          "name": "UPI-MILLENNIA CARD CASH BACK",\n          "amount": 800.0,\n          "frequency": "Multiple instances"\n        },\n        {\n          "name": "CREDIT INTEREST CAPITALISED",\n          "amount": 570.0,\n          "frequency": "Multiple instances"\n        },\n        {\n          "name": "UPI-VIDHYASHANKAR M",\n          "amount": 10502.0,\n          "frequency": "One-time"\n        }\n      ]\n    }\n  },\n  {\n    "title": "Expense Parsing",\n    "description": {\n      "totalExpenses": 700826.95,\n      "categories": {\n        "Utilities": [\n          {\n            "name": "UPI-AIRTELPREPAIDTN",\n            "amount": 633.0\n          }\n        ],\n        "Food & Dining": [\n          {\n            "name": "UPI-FOOD OUTLETS",\n            "amount": 1120.0\n          }\n        ],\n        "Grocery": [\n          {\n            "name": "UPI-BIGBASKET",\n            "amount": 500.0\n          }\n        ],\n        "Entertainment": [\n          {\n            "name": "UPI-INNOVATIVE MULTIPLEX",\n            "amount": 359.0\n          },\n          {\n            "name": "UPI-GRAND CINEMAS",\n            "amount": 160.0\n          }\n        ],\n        "Loan Repayments": [\n          {\n            "name": "CRED.CLUB Payments",\n            "amount": 36648.65\n          },\n          {\n            "name": "LIC HFL",\n            "amount": 27960.0\n          }\n        ],\n        "Healthcare": [\n          {\n            "name": "UPI-STAR PHARMACY",\n            "amount": 80.0\n          }\n        ],\n        "Insurance": [\n          {\n            "name": "TATAAIAPOLICY",\n            "amount": 19992.0\n          },\n          {\n            "name": "POLICYBAZAAR",\n            "amount": 7380.0\n          }\n        ],\n        "Rent": [\n          {\n            "name": "NAVEEN KUMAR Rent Payment",\n            "amount": 59500.0\n          }\n        ],\n        "Telecommunications": [\n          {\n            "name": "UPI-JALIL MAJID SHAIKH",\n            "amount": 10200.0\n          }\n        ],\n        "Shopping & Others": [\n          {\n            "name": "Various",\n            "amount": 533324.3\n          }\n        ]\n      }\n    }\n  },\n  {\n    "title": "Debt Identification",\n    "description": {\n      "totalDebt": 60000.0,\n      "loans": [\n        {\n          "type": "Fixed Deposit",\n          "amount": 100000.0\n        },\n        {\n          "type": "Personal Loan EMI",\n          "amount": 60000.0\n        }\n      ]\n    }\n  },\n  {\n    "title": "Asset Identification",\n    "description": {\n      "totalAssets": 100996.0,\n      "assets": [\n        {\n          "type": "Fixed Deposit",\n          "amount": 100000\n        },\n        {\n          "type": "Bank Account Balance",\n          "amount": 996.0\n        }\n      ]\n    }\n  },\n  {\n    "title": "Insurance Affordability Index",\n    "description": {\n      "indexScore": 78,\n      "details": "The customer has a moderate capacity to afford additional insurance products and coverage add-ons."\n    }\n  },\n  {\n    "title": "Debt-to-Income Ratio",\n    "description": {\n      "ratio": 0.1567,\n      "analysis": "The majority of the individual\'s income is not committed towards debt repayment, indicating good financial health concerning liabilities."\n    }\n  },\n  {\n    "title": "Insurance Recommendations",\n    "description": {\n      "creditLinkedInsurance": {\n        "suggestion": "Credit Health Secure",\n        "sumInsured": 100000,\n        "premium": 1000,\n        "coverage": "Accidental Death, Permanent Total Disability"\n      },\n      "healthInsurance": [\n        {\n          "suggestion": "Health Secure",\n          "sumInsured": 500000,\n          "premium": 5000,\n          "coverage": "Hospitalization, OPD, Critical Illness"\n        },\n        {\n          "suggestion": "Health Family",\n          "sumInsured": 1000000,\n          "premium": 9000,\n          "coverage": "Family Floater Plan with Maternity Cover"\n        }\n      ]\n    }\n  }\n]';
+  // const jsonString =
+  //   '[\n    {\n        "title": "Income",\n        "data": [\n            {"source": "Salary or Other Recurring Credits", "amount": 38891.34}\n        ]\n    },\n    {\n        "title": "Expenses",\n        "data": [\n            {"category": "Utilities", "amount": 4620.00},\n            {"category": "Grocery", "amount": 9147.67},\n            {"category": "Entertainment", "amount": 1736.00},\n            {"category": "Loan Repayments", "amount": 27670.50},\n            {"category": "Healthcare", "amount": 6040.00},\n            {"category": "Others", "amount": 57059.10}\n        ]\n    },\n    {\n        "title": "Debt",\n        "data": [\n            {"type": "Credit Card Outstanding", "balance": 20000.00},\n            {"type": "Home Loan", "balance": 500000.00, "EMI": 7500.00},\n            {"type": "Personal Loan", "balance": 100000.00, "EMI": 3000.00}\n        ]\n    },\n    {\n        "title": "Assets",\n        "data": [\n            {"type": "Savings Account", "balance": 10000.00},\n            {"type": "Fixed Deposits", "amount": 15000.00},\n            {"type": "Mutual Funds", "amount": 25000.00}\n        ]\n    },\n    {\n        "title": "Insurance Policies",\n        "data": [\n            {"provider": "LIC", "policyNumber": "LIC123456", "sumAssured": 300000.00, "premium": 5000.00, "status": "Active"},\n            {"provider": "Policy Bazaar", "policyNumber": "PBSI14110574", "sumAssured": 500000.00, "premium": 7000.00, "status": "Active"}\n        ]\n    },\n    {\n        "title": "Debt-to-Income Ratio",\n        "data": [\n            {"ratio": 0.4375}\n        ]\n    },\n    {\n        "title": "Insurance Recommendations",\n        "data": [\n            {\n                "Health Insurance": [\n                    {"plan": "Health Secure", "sumInsured": 500000, "premium": 5000, "insuredMembers": 2, "coverages": ["OPD Coverage", "Critical Illness"], "additionalBenefits": ["No-Claim Bonus"]}\n                ],\n                "Credit-linked Insurance": [\n                    {"plan": "Credit Health Cover", "sumInsured": 200000, "premium": 2000, "linkedProduct": "Education Loan", "coverages": ["Accidental Death", "Critical Illness"], "additionalBenefits": ["Partial Loan Coverage"]}\n                ]\n            }\n        ]\n    }\n]';
 
-  const data = JSON.parse(jsonString);
+  // const data = JSON.parse(jsonString);
+
   return (
     <>
       {console.log("dataaaaaaaa", data)}
@@ -50,73 +69,147 @@ const Response = () => {
             backgroundColor: "#fff",
             borderRadius: 2,
             boxShadow: "0px 4px 12px rgba(36, 180, 179, 0.8)",
+            width: "100%", // Ensures it takes full width of its container
+            maxWidth: "1200px", // Sets a max width to create a fixed width look
+            minWidth: "1200px",
           }}
         >
-          {data.map((item, index) => (
-            <Box key={index} className="data-section" sx={{ marginBottom: 4 }}>
-              <Typography
-                variant="h4"
-                sx={{ color: "#24b4b3", marginBottom: 2 }}
-              >
-                {item.title}
-              </Typography>
-              <Box className="description" sx={{ paddingLeft: 2 }}>
-                {Object.keys(item.description).map((key, i) => {
-                  const description = item.description[key];
+          {loading && <LinearProgress />}
 
-                  if (Array.isArray(description)) {
-                    return (
-                      <Box key={i} sx={{ marginBottom: 2 }}>
-                        <Typography variant="h6">{key}</Typography>
-                        <ul>
-                          {description.map((subItem, j) => (
-                            <li key={j}>
-                              <span>{subItem.name || subItem.type}: </span>
-                              <span>
-                                {subItem.amount || subItem.sumInsured}{" "}
-                              </span>
-                              <span>{subItem.frequency || ""}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </Box>
-                    );
-                  } else if (typeof description === "object") {
-                    return (
-                      <Box key={i} sx={{ marginBottom: 2 }}>
-                        <Typography variant="h6">{key}</Typography>
-                        <Typography>
-                          {description.details || description.analysis || ""}
-                        </Typography>
-                        {description.sumInsured && (
-                          <Typography>
-                            Sum Insured: {description.sumInsured}
+          {!loading && (
+            <>
+              <Tabs value={tabIndex} onChange={handleTabChange} centered>
+                <Tab label="Insurance Recommendations" />
+                <Tab label="Other Data" />
+              </Tabs>
+              {tabIndex === 0 && (
+                <>
+                  {data.map((item, index) => (
+                    <Box
+                      key={index}
+                      className="data-section"
+                      sx={{ marginBottom: 4 }}
+                    >
+                      {item.title === "Insurance Recommendations" && (
+                        <>
+                          {" "}
+                          <Typography
+                            variant="h4"
+                            sx={{ color: "#24b4b3", marginBottom: 2 }}
+                          >
+                            {item.title}
                           </Typography>
-                        )}
-                        {description.premium && (
-                          <Typography>
-                            Premium: {description.premium}
+                          <Box className="description" sx={{ paddingLeft: 2 }}>
+                            {item.data.map((dataItem, i) => {
+                              return (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  {Object.keys(dataItem).map((key, j) => (
+                                    <Typography key={j}>
+                                      <strong>
+                                        {key.replace(/([A-Z])/g, " $1")}:{" "}
+                                      </strong>
+                                      {Array.isArray(dataItem[key]) ? (
+                                        <ul>
+                                          {dataItem[key].map((subItem, k) =>
+                                            typeof subItem === "string" ? (
+                                              <li key={k}>{subItem}</li>
+                                            ) : (
+                                              <li key={k}>
+                                                {Object.keys(subItem).map(
+                                                  (subKey, l) => (
+                                                    <span key={l}>
+                                                      {subKey.replace(
+                                                        /([A-Z])/g,
+                                                        " $1"
+                                                      )}
+                                                      : {subItem[subKey]}{" "}
+                                                    </span>
+                                                  )
+                                                )}
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <span>{dataItem[key]}</span>
+                                      )}
+                                    </Typography>
+                                  ))}
+                                </Box>
+                              );
+                            })}
+                          </Box>
+                        </>
+                      )}
+                    </Box>
+                  ))}
+                </>
+              )}
+              {tabIndex === 1 && (
+                <>
+                  {data.map((item, index) => (
+                    <Box
+                      key={index}
+                      className="data-section"
+                      sx={{ marginBottom: 4 }}
+                    >
+                      {item.title !== "Insurance Recommendations" && (
+                        <>
+                          {" "}
+                          <Typography
+                            variant="h4"
+                            sx={{ color: "#24b4b3", marginBottom: 2 }}
+                          >
+                            {item.title}
                           </Typography>
-                        )}
-                        {description.coverage && (
-                          <Typography>
-                            Coverage: {description.coverage}
-                          </Typography>
-                        )}
-                      </Box>
-                    );
-                  } else {
-                    return (
-                      <Box key={i} sx={{ marginBottom: 2 }}>
-                        <strong>{key}: </strong>
-                        <span>{description}</span>
-                      </Box>
-                    );
-                  }
-                })}
-              </Box>
-            </Box>
-          ))}
+                          <Box className="description" sx={{ paddingLeft: 2 }}>
+                            {item.data.map((dataItem, i) => {
+                              return (
+                                <Box key={i} sx={{ marginBottom: 2 }}>
+                                  {Object.keys(dataItem).map((key, j) => (
+                                    <Typography key={j}>
+                                      <strong>
+                                        {key.replace(/([A-Z])/g, " $1")}:{" "}
+                                      </strong>
+                                      {Array.isArray(dataItem[key]) ? (
+                                        <ul>
+                                          {dataItem[key].map((subItem, k) =>
+                                            typeof subItem === "string" ? (
+                                              <li key={k}>{subItem}</li>
+                                            ) : (
+                                              <li key={k}>
+                                                {Object.keys(subItem).map(
+                                                  (subKey, l) => (
+                                                    <span key={l}>
+                                                      {subKey.replace(
+                                                        /([A-Z])/g,
+                                                        " $1"
+                                                      )}
+                                                      : {subItem[subKey]}{" "}
+                                                    </span>
+                                                  )
+                                                )}
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <span>{dataItem[key]}</span>
+                                      )}
+                                    </Typography>
+                                  ))}
+                                </Box>
+                              );
+                            })}
+                          </Box>
+                        </>
+                      )}
+                    </Box>
+                  ))}
+                </>
+              )}{" "}
+            </>
+          )}
         </Box>
       </Box>
 
