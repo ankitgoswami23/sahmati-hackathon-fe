@@ -261,27 +261,64 @@ const ResponseRender = () => {
     fetchData();
   }, []);
 
+  //   const renderData = (dataItem) => {
+  //     if (Array.isArray(dataItem)) {
+  //       return dataItem.map((item, index) => (
+  //         <Box key={index} sx={{ marginBottom: 2 }}>
+  //           {renderData(item)}
+  //           {index < dataItem.length - 1 && (
+  //             <Divider sx={{ backgroundColor: "black" }} />
+  //           )}{" "}
+  //           {/* Add divider between items */}
+  //         </Box>
+  //       ));
+  //     } else if (typeof dataItem === "object" && dataItem !== null) {
+  //       return Object.entries(dataItem).map(([key, value], index) => (
+  //         <Box
+  //           key={index}
+  //           sx={{ marginBottom: 2, display: "flex", alignItems: "center" }}
+  //         >
+  //           <Typography variant="h6" sx={{ fontWeight: "bold", marginRight: 1 }}>
+  //             {key.charAt(0).toUpperCase() + key.slice(1)}:
+  //           </Typography>
+  //           <Box sx={{ marginLeft: 1 }}> {renderData(value)}</Box>
+  //         </Box>
+  //       ));
+  //     } else {
+  //       return (
+  //         <Typography sx={{ display: "inline" }}>
+  //           {dataItem !== null ? dataItem.toString() : "null"}
+  //         </Typography>
+  //       );
+  //     }
+  //   };
+
   const renderData = (dataItem) => {
     if (Array.isArray(dataItem)) {
       return dataItem.map((item, index) => (
         <Box key={index} sx={{ marginBottom: 2 }}>
           {renderData(item)}
           {index < dataItem.length - 1 && (
-            <Divider sx={{ backgroundColor: "black" }} />
-          )}{" "}
-          {/* Add divider between items */}
+            <Divider sx={{ backgroundColor: "black", my: 2 }} />
+          )}
         </Box>
       ));
     } else if (typeof dataItem === "object" && dataItem !== null) {
       return Object.entries(dataItem).map(([key, value], index) => (
         <Box
           key={index}
-          sx={{ marginBottom: 2, display: "flex", alignItems: "center" }}
+          sx={{
+            marginBottom: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold", marginRight: 1 }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", flex: 1 }}>
             {key.charAt(0).toUpperCase() + key.slice(1)}:
           </Typography>
-          <Box sx={{ marginLeft: 1 }}>{renderData(value)}</Box>
+          <Box sx={{ flex: 2, marginLeft: 2 }}>{renderData(value)}</Box>
         </Box>
       ));
     } else {
@@ -292,7 +329,6 @@ const ResponseRender = () => {
       );
     }
   };
-
   return (
     <>
       <Header />
@@ -315,8 +351,8 @@ const ResponseRender = () => {
             backgroundColor: "#fff",
             borderRadius: 2,
             boxShadow: "0px 4px 12px rgba(36, 180, 179, 0.8)",
-            width: "100%", // Ensures it takes full width of its container
-            maxWidth: "1200px", // Sets a max width to create a fixed width look
+            width: "100%",
+            maxWidth: "1200px",
             minWidth: "1200px",
           }}
         >
@@ -328,12 +364,12 @@ const ResponseRender = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                bgcolor: "rgba(255, 255, 255, 0.8)", // Background with some opacity
-                backdropFilter: "blur(4px)", // This creates the blur effect
+                bgcolor: "rgba(255, 255, 255, 0.8)",
+                backdropFilter: "blur(4px)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                zIndex: 9999, // Ensures it's above other content
+                zIndex: 9999,
               }}
             >
               <CircularProgress size={60} sx={{ color: "#24b4b3" }} />
@@ -352,16 +388,18 @@ const ResponseRender = () => {
                       {item.title == "Insurance Recommendations" && (
                         <>
                           {item.title && (
-                            <Typography
-                              variant="h4"
-                              sx={{ color: "#24b4b3", marginBottom: 2 }}
-                            >
-                              {item.title}
-                            </Typography>
+                            <>
+                              <Typography
+                                variant="h4"
+                                sx={{ color: "#24b4b3", marginBottom: 2 }}
+                              >
+                                {item.title}
+                              </Typography>
+                            </>
                           )}
 
                           <Box className="description">
-                            {renderData(item.data)} {/* Call to renderData */}
+                            {renderData(item.data)}
                           </Box>
                           <Divider />
                         </>
@@ -377,16 +415,18 @@ const ResponseRender = () => {
                       {item.title !== "Insurance Recommendations" && (
                         <>
                           {item.title && (
-                            <Typography
-                              variant="h4"
-                              sx={{ color: "#24b4b3", marginBottom: 2 }}
-                            >
-                              {item.title}
-                            </Typography>
+                            <>
+                              <Typography
+                                variant="h4"
+                                sx={{ color: "#24b4b3", marginBottom: 2 }}
+                              >
+                                {item.title}
+                              </Typography>
+                            </>
                           )}
 
                           <Box className="description">
-                            {renderData(item.data)} {/* Call to renderData */}
+                            {renderData(item.data)}
                           </Box>
                         </>
                       )}
